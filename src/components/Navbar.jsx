@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
 import { Home, Building2, PlusCircle, ListChecks, Star, LogIn, UserPlus, Menu, X, Sun, Moon, LogOut } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -30,7 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} shadow-lg sticky top-0 z-40`}>
+    <nav className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-lg sticky top-0 z-40 border-b border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -46,9 +44,7 @@ const Navbar = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition ${
-                    theme === 'dark' ? 'hover:bg-gray-800' : 'hover:bg-gray-100'
-                  }`}
+                  className="flex items-center space-x-1 px-3 py-2 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   <item.icon className="w-4 h-4" />
                   <span>{item.name}</span>
@@ -58,10 +54,12 @@ const Navbar = () => {
             
             {/* Theme Toggle */}
             <button 
-              onClick={toggleTheme} 
-              className={`p-2 rounded-lg ${theme === 'dark' ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}
+              onClick={() => document.documentElement.classList.toggle('dark')}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+              aria-label="Toggle theme"
             >
-              {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+              <Sun className="w-5 h-5 hidden dark:block" />
+              <Moon className="w-5 h-5 block dark:hidden" />
             </button>
 
             {/* Auth Buttons */}
@@ -74,18 +72,14 @@ const Navbar = () => {
                   onClick={() => setShowDropdown(!showDropdown)}
                 />
                 {showDropdown && (
-                  <div className={`absolute right-0 mt-2 w-48 rounded-lg shadow-xl ${
-                    theme === 'dark' ? 'bg-gray-800' : 'bg-white'
-                  } py-2 z-50`}>
-                    <div className={`px-4 py-2 border-b ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
+                  <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-xl bg-white dark:bg-gray-800 py-2 z-50 border border-gray-200 dark:border-gray-700">
+                    <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
                       <p className="font-semibold">{user.displayName}</p>
-                      <p className="text-sm text-gray-500">{user.email}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{user.email}</p>
                     </div>
                     <button
                       onClick={handleLogout}
-                      className={`w-full px-4 py-2 text-left flex items-center space-x-2 ${
-                        theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
-                      }`}
+                      className="w-full px-4 py-2 text-left flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       <LogOut className="w-4 h-4" />
                       <span>Logout</span>
@@ -104,7 +98,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="flex items-center space-x-1 px-4 py-2 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50"
+                  className="flex items-center space-x-1 px-4 py-2 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/20"
                 >
                   <UserPlus className="w-4 h-4" />
                   <span>Sign Up</span>
@@ -125,16 +119,14 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className={`md:hidden ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} pb-4`}>
+        <div className="md:hidden bg-white dark:bg-gray-800 pb-4 border-b border-gray-200 dark:border-gray-700">
           {navigation.map((item) => (
             (!item.protected || user) && (
               <Link
                 key={item.path}
                 to={item.path}
                 onClick={() => setIsMenuOpen(false)}
-                className={`w-full flex items-center space-x-2 px-4 py-3 ${
-                  theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
-                }`}
+                className="w-full flex items-center space-x-2 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <item.icon className="w-5 h-5" />
                 <span>{item.name}</span>
@@ -147,14 +139,14 @@ const Navbar = () => {
               <Link 
                 to="/login" 
                 onClick={() => setIsMenuOpen(false)}
-                className="w-full px-4 py-3 text-left block"
+                className="w-full px-4 py-3 text-left block hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 Login
               </Link>
               <Link 
                 to="/register" 
                 onClick={() => setIsMenuOpen(false)}
-                className="w-full px-4 py-3 text-left block"
+                className="w-full px-4 py-3 text-left block hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 Sign Up
               </Link>
@@ -167,7 +159,7 @@ const Navbar = () => {
                 handleLogout();
                 setIsMenuOpen(false);
               }}
-              className="w-full px-4 py-3 text-left"
+              className="w-full px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               Logout
             </button>

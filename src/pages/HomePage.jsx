@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../contexts/ThemeContext';
 import { MapPin, DollarSign, Star, Building2, User } from 'lucide-react';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const HomePage = ({ showToast }) => {
-  const { theme } = useTheme();
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [featuredProperties, setFeaturedProperties] = useState([]);
@@ -15,17 +13,17 @@ const HomePage = ({ showToast }) => {
     { 
       image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200', 
       title: 'Find Your Dream Home', 
-      subtitle: 'Browse thousands of properties' 
+      subtitle: 'Browse thousands of properties in Bangladesh' 
     },
     { 
       image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200', 
       title: 'Luxury Living Spaces', 
-      subtitle: 'Premium properties for discerning buyers' 
+      subtitle: 'Premium properties for discerning buyers in Dhaka' 
     },
     { 
       image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200', 
       title: 'Investment Opportunities', 
-      subtitle: 'Smart real estate investments' 
+      subtitle: 'Smart real estate investments across Bangladesh' 
     }
   ];
 
@@ -37,101 +35,73 @@ const HomePage = ({ showToast }) => {
   }, []);
 
   useEffect(() => {
-    // Simulated featured properties (updated dates to Nov 2025)
     setTimeout(() => {
       setFeaturedProperties([
         { 
           _id: '1', 
-          propertyName: 'Modern Villa', 
+          propertyName: 'Modern Villa in Gulshan', 
           category: 'Sale', 
-          description: 'Stunning modern villa with pool', 
-          location: 'Beverly Hills, CA', 
-          price: 2500000, 
-          imageLink: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600',
-          postedDate: '2025-11-10' // Recent date
+          description: 'Stunning modern villa with pool in prime Gulshan location', 
+          location: 'Gulshan, Dhaka', 
+          price: 250000000,  // 25 crore BDT
+          imageLink: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600' 
         },
         { 
           _id: '2', 
-          propertyName: 'Downtown Apartment', 
+          propertyName: 'Downtown Apartment in Banani', 
           category: 'Rent', 
-          description: 'Luxury apartment in city center', 
-          location: 'New York, NY', 
-          price: 4500, 
-          imageLink: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600',
-          postedDate: '2025-11-08'
+          description: 'Luxury apartment in city center Banani', 
+          location: 'Banani, Dhaka', 
+          price: 45000,  // 45,000 BDT/month
+          imageLink: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600' 
         },
         { 
           _id: '3', 
-          propertyName: 'Beach House', 
+          propertyName: 'Beach House in Cox\'s Bazar', 
           category: 'Sale', 
-          description: 'Beautiful beachfront property', 
-          location: 'Malibu, CA', 
-          price: 3200000, 
-          imageLink: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=600',
-          postedDate: '2025-11-12'
+          description: 'Beautiful beachfront property near the sea', 
+          location: 'Cox\'s Bazar', 
+          price: 320000000,  // 32 crore BDT
+          imageLink: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=600' 
         },
         { 
           _id: '4', 
-          propertyName: 'Commercial Space', 
+          propertyName: 'Commercial Space in Motijheel', 
           category: 'Commercial', 
-          description: 'Prime retail location', 
-          location: 'Los Angeles, CA', 
-          price: 8000, 
-          imageLink: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600',
-          postedDate: '2025-11-05'
+          description: 'Prime retail location in business district', 
+          location: 'Motijheel, Dhaka', 
+          price: 80000,  // 80,000 BDT/month
+          imageLink: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600' 
         },
         { 
           _id: '5', 
-          propertyName: 'Mountain Cabin', 
+          propertyName: 'Mountain Cabin in Sylhet', 
           category: 'Rent', 
-          description: 'Cozy cabin retreat', 
-          location: 'Aspen, CO', 
-          price: 3000, 
-          imageLink: 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=600',
-          postedDate: '2025-11-09'
-        },
-        { 
-          _id: '6', 
-          propertyName: 'Urban Loft', 
-          category: 'Sale', 
-          description: 'Stylish industrial loft', 
-          location: 'Chicago, IL', 
-          price: 850000, 
-          imageLink: 'https://images.unsplash.com/photo-1502672260066-6bc36a05d0d6?w=600',
-          postedDate: '2025-11-11'
+          description: 'Cozy cabin retreat in green hills', 
+          location: 'Sylhet', 
+          price: 30000,  // 30,000 BDT/month
+          imageLink: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600' 
         }
       ]);
       setLoading(false);
     }, 1000);
   }, []);
 
-  const viewDetails = (propertyId) => {
-    navigate(`/property/${propertyId}`);
+  const formatPrice = (price, category) => {
+    if (category === 'Sale') {
+      return `${(price / 10000000).toLocaleString()} Cr BDT`;
+    }
+    return `${(price / 1000).toLocaleString()}k BDT/mo`;
   };
 
-  // Varied testimonials for authenticity
-  const testimonials = [
-    { 
-      review: "HomeNest helped me find my dream home. The process was smooth and professional.", 
-      name: "Client 1", 
-      role: "Property Buyer" 
-    },
-    { 
-      review: "Excellent service and great selection of luxury rentals. Highly recommend!", 
-      name: "Client 2", 
-      role: "Renter" 
-    },
-    { 
-      review: "Found the perfect investment property quickly. The team was knowledgeable and responsive.", 
-      name: "Client 3", 
-      role: "Investor" 
-    }
-  ];
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
-    <div className={theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}>
-      {/* Slider */}
-      <div className="relative h-96 md:h-[500px] overflow-hidden" role="region" aria-label="Hero slider">
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Slider */}
+      <div className="relative h-96 overflow-hidden">
         {slides.map((slide, index) => (
           <div
             key={index}
@@ -139,153 +109,67 @@ const HomePage = ({ showToast }) => {
               index === currentSlide ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <img 
-              src={slide.image} 
-              alt={slide.title} 
+            <img
+              src={slide.image}
+              alt={slide.title}
               className="w-full h-full object-cover"
-              onError={(e) => { e.target.src = 'https://via.placeholder.com/1200x500?text=HomeNest'; showToast('Image failed to load', 'error'); }}
             />
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
               <div className="text-center text-white px-4">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4">{slide.title}</h1>
-                <p className="text-xl md:text-2xl font-light">{slide.subtitle}</p>
+                <h1 className="text-4xl md:text-5xl font-bold mb-4">{slide.title}</h1>
+                <p className="text-xl md:text-2xl">{slide.subtitle}</p>
               </div>
             </div>
           </div>
         ))}
-        
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentSlide ? 'bg-white' : 'bg-gray-400 hover:bg-gray-300'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
       </div>
 
       {/* Featured Properties */}
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Featured Properties</h2>
-        
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProperties.map((property) => (
-              <div key={property._id} className={`rounded-lg shadow-lg overflow-hidden ${
-                theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white'
-              }`}>
-                <img 
-                  src={property.imageLink} 
-                  alt={property.propertyName} 
-                  className="w-full h-48 object-cover"
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/400x300?text=Property'; }}
-                />
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-semibold">{property.propertyName}</h3>
-                    <span className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full">{property.category}</span>
-                  </div>
-                  <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} mb-4 line-clamp-2`}>{property.description}</p>
-                  <div className="flex items-center text-gray-600 mb-2">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    <span className="text-sm">{property.location}</span>
-                  </div>
-                  <div className="flex items-center text-green-600 font-bold text-xl mb-4">
-                    <DollarSign className="w-5 h-5" />
-                    <span>${property.price.toLocaleString()}</span>
-                  </div>
-                  <button
-                    onClick={() => viewDetails(property._id)}
-                    className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
-                  >
-                    View Details
-                  </button>
+      <div className="container mx-auto py-12 px-4">
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Featured Properties</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredProperties.map((property) => (
+            <div key={property._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+              <img
+                src={property.imageLink}
+                alt={property.propertyName}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-xl font-semibold text-gray-800">{property.propertyName}</h3>
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${
+                    property.category === 'Sale' ? 'bg-green-100 text-green-800' :
+                    property.category === 'Rent' ? 'bg-blue-100 text-blue-800' :
+                    'bg-purple-100 text-purple-800'
+                  }`}>
+                    {property.category}
+                  </span>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Why Choose Us */}
-      <div className={`py-16 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}>
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Why Choose HomeNest</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building2 className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Verified Listings</h3>
-              <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>All properties are verified and genuine</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Star className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Trusted Reviews</h3>
-              <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Real reviews from real customers</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <User className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Expert Support</h3>
-              <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>24/7 customer support available</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Statistics */}
-      <div className="max-w-7xl mx-auto px-4 py-16 bg-white dark:bg-gray-900">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div>
-            <h3 className="text-4xl font-bold text-blue-600">10K+</h3>
-            <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mt-2`}>Properties Listed</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-blue-600">5K+</h3>
-            <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mt-2`}>Happy Clients</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-blue-600">50+</h3>
-            <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mt-2`}>Cities Covered</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-blue-600">15+</h3>
-            <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mt-2`}>Years Experience</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Testimonials */}
-      <div className={`py-16 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}>
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">What Our Clients Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, i) => (
-              <div key={i} className={`p-6 rounded-lg ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} shadow-lg`}>
-                <div className="flex mb-4">
-                  {[1,2,3,4,5].map(star => <Star key={star} className="w-5 h-5 text-yellow-400 fill-current" />)}
+                <p className="text-gray-600 mb-3 text-sm">{property.description}</p>
+                <div className="flex items-center text-gray-500 mb-3">
+                  <MapPin className="w-4 h-4 mr-1" />
+                  {property.location}
                 </div>
-                <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mb-4`}>{testimonial.review}</p>
-                <div className="flex items-center">
-                  <img src={`https://i.pravatar.cc/40?img=${i + 1}`} alt={testimonial.name} className="w-10 h-10 rounded-full mr-3" />
-                  <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl font-bold text-green-600 flex items-center">
+                    <DollarSign className="w-4 h-4 mr-1" />
+                    {formatPrice(property.price, property.category)}
+                  </span>
+                  <div className="flex items-center text-yellow-500">
+                    <Star className="w-4 h-4 fill-current" />
+                    <span className="ml-1 text-sm">4.5</span>
                   </div>
                 </div>
+                <button
+                  onClick={() => navigate(`/property/${property._id}`)}
+                  className="w-full mt-4 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+                >
+                  View Details
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

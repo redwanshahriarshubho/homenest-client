@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
 import { UserPlus } from 'lucide-react';
 
 const RegisterPage = ({ showToast }) => {
   const { register, googleLogin } = useAuth();
-  const { theme } = useTheme();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -67,73 +65,61 @@ const RegisterPage = ({ showToast }) => {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center px-4 py-12 ${
-      theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'
-    }`}>
-      <div className={`max-w-md w-full p-8 rounded-lg shadow-xl ${
-        theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white'
-      }`}>
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-100 dark:bg-gray-900">
+      <div className="max-w-md w-full p-8 rounded-lg shadow-xl bg-white dark:bg-gray-800">
         <div className="text-center mb-8">
           <UserPlus className="w-16 h-16 mx-auto text-blue-600 mb-4" />
-          <h2 className="text-3xl font-bold">Create Account</h2>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Create Account</h2>
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block mb-2 font-semibold">Name *</label>
+            <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Name *</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              className={`w-full px-4 py-2 rounded-lg border ${
-                theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-              }`}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="Enter your name"
               disabled={loading}
             />
           </div>
           
           <div>
-            <label className="block mb-2 font-semibold">Email *</label>
+            <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Email *</label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
-              className={`w-full px-4 py-2 rounded-lg border ${
-                theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-              }`}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="Enter your email"
               disabled={loading}
             />
           </div>
           
           <div>
-            <label className="block mb-2 font-semibold">Photo URL</label>
+            <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Photo URL</label>
             <input
               type="url"
               value={formData.photoURL}
               onChange={(e) => setFormData({...formData, photoURL: e.target.value})}
-              className={`w-full px-4 py-2 rounded-lg border ${
-                theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-              }`}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="Enter photo URL (optional)"
               disabled={loading}
             />
           </div>
           
           <div>
-            <label className="block mb-2 font-semibold">Password *</label>
+            <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Password *</label>
             <input
               type="password"
               value={formData.password}
               onChange={(e) => setFormData({...formData, password: e.target.value})}
-              className={`w-full px-4 py-2 rounded-lg border ${
-                theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-              }`}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="Enter your password"
               disabled={loading}
             />
-            <p className="text-xs text-gray-500 mt-1">Must contain uppercase, lowercase, and be 6+ characters</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Must contain uppercase, lowercase, and be 6+ characters</p>
           </div>
           
           <button
@@ -148,26 +134,23 @@ const RegisterPage = ({ showToast }) => {
         <div className="mt-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className={`px-2 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>Or continue with</span>
+              <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Or continue with</span>
             </div>
           </div>
           
           <button
             onClick={handleGoogleLogin}
             disabled={loading}
-            className={`mt-4 w-full py-3 border-2 rounded-lg hover:bg-gray-50 transition font-semibold flex items-center justify-center space-x-2 ${
-              theme === 'dark' ? 'border-gray-600 hover:bg-gray-700' : 'border-gray-300'
-            } disabled:opacity-50`}
+            className="mt-4 w-full py-3 border-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition font-semibold flex items-center justify-center space-x-2 border-gray-300 dark:border-gray-600 disabled:opacity-50"
           >
-            <span>🔍</span>
             <span>Google</span>
           </button>
         </div>
         
-        <p className="mt-6 text-center">
+        <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
           Already have an account?{' '}
           <Link to="/login" className="text-blue-600 hover:underline font-semibold">
             Login

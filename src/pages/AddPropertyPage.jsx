@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
 import { PlusCircle } from 'lucide-react';
 
 const AddPropertyPage = ({ showToast }) => {
   const { user } = useAuth();
-  const { theme } = useTheme();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     propertyName: '',
@@ -28,7 +26,6 @@ const AddPropertyPage = ({ showToast }) => {
 
     setLoading(true);
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       showToast('Property added successfully!', 'success');
       navigate('/my-properties');
@@ -40,53 +37,45 @@ const AddPropertyPage = ({ showToast }) => {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
       <div className="max-w-3xl mx-auto px-4 py-8">
         <div className="flex items-center mb-8">
           <PlusCircle className="w-10 h-10 text-blue-600 mr-3" />
-          <h1 className="text-4xl font-bold">Add New Property</h1>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">Add New Property</h1>
         </div>
         
-        <form onSubmit={handleSubmit} className={`p-8 rounded-lg shadow-lg ${
-          theme === 'dark' ? 'bg-gray-800' : 'bg-white'
-        }`}>
+        <form onSubmit={handleSubmit} className="p-8 rounded-lg shadow-lg bg-white dark:bg-gray-800">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2">
-              <label className="block mb-2 font-semibold">Property Name *</label>
+              <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Property Name *</label>
               <input
                 type="text"
                 value={formData.propertyName}
                 onChange={(e) => setFormData({...formData, propertyName: e.target.value})}
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-                }`}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="Enter property name"
                 disabled={loading}
               />
             </div>
             
             <div className="md:col-span-2">
-              <label className="block mb-2 font-semibold">Description *</label>
+              <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Description *</label>
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
                 rows="4"
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-                }`}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="Enter property description"
                 disabled={loading}
               />
             </div>
             
             <div>
-              <label className="block mb-2 font-semibold">Category *</label>
+              <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Category *</label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-                }`}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 disabled={loading}
               >
                 <option value="Rent">Rent</option>
@@ -97,68 +86,58 @@ const AddPropertyPage = ({ showToast }) => {
             </div>
             
             <div>
-              <label className="block mb-2 font-semibold">Price *</label>
+              <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Price *</label>
               <input
                 type="number"
                 value={formData.price}
                 onChange={(e) => setFormData({...formData, price: e.target.value})}
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-                }`}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="Enter price"
                 disabled={loading}
               />
             </div>
             
             <div className="md:col-span-2">
-              <label className="block mb-2 font-semibold">Location *</label>
+              <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Location *</label>
               <input
                 type="text"
                 value={formData.location}
                 onChange={(e) => setFormData({...formData, location: e.target.value})}
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-                }`}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="Enter location (city, area, or address)"
                 disabled={loading}
               />
             </div>
             
             <div className="md:col-span-2">
-              <label className="block mb-2 font-semibold">Image Link *</label>
+              <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Image Link *</label>
               <input
                 type="url"
                 value={formData.imageLink}
                 onChange={(e) => setFormData({...formData, imageLink: e.target.value})}
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-                }`}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="Enter image URL"
                 disabled={loading}
               />
             </div>
             
             <div>
-              <label className="block mb-2 font-semibold">User Email</label>
+              <label className="block mb-2 font-semibold text-gray-900 dark:text-white">User Email</label>
               <input
                 type="email"
                 value={user?.email || ''}
                 readOnly
-                className={`w-full px-4 py-2 rounded-lg border bg-gray-200 ${
-                  theme === 'dark' ? 'border-gray-600 text-gray-900' : 'border-gray-300'
-                }`}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
               />
             </div>
             
             <div>
-              <label className="block mb-2 font-semibold">User Name</label>
+              <label className="block mb-2 font-semibold text-gray-900 dark:text-white">User Name</label>
               <input
                 type="text"
                 value={user?.displayName || ''}
                 readOnly
-                className={`w-full px-4 py-2 rounded-lg border bg-gray-200 ${
-                  theme === 'dark' ? 'border-gray-600 text-gray-900' : 'border-gray-300'
-                }`}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
               />
             </div>
           </div>
