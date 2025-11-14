@@ -22,15 +22,15 @@ const UpdatePropertyPage = ({ showToast }) => {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    loadProperty();
+    loadPropertyData();
   }, [id]);
 
-  const loadProperty = () => {
-    // Simulated property loading
+  const loadPropertyData = () => {
+    // Simulated property data loading
     setTimeout(() => {
       setFormData({
         propertyName: 'Modern Villa',
-        description: 'Stunning modern villa with pool and amazing views',
+        description: 'Stunning modern villa with pool',
         category: 'Sale',
         price: '2500000',
         location: 'Beverly Hills, CA',
@@ -50,10 +50,9 @@ const UpdatePropertyPage = ({ showToast }) => {
 
     setSubmitting(true);
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       showToast('Property updated successfully!', 'success');
-      navigate(`/property/${id}`);
+      navigate('/my-properties');
     } catch (error) {
       showToast('Failed to update property', 'error');
     } finally {
@@ -69,7 +68,7 @@ const UpdatePropertyPage = ({ showToast }) => {
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
       <div className="max-w-3xl mx-auto px-4 py-8">
         <div className="flex items-center mb-8">
-          <Edit className="w-10 h-10 text-green-600 mr-3" />
+          <Edit className="w-10 h-10 text-blue-600 mr-3" />
           <h1 className="text-4xl font-bold">Update Property</h1>
         </div>
         
@@ -86,6 +85,7 @@ const UpdatePropertyPage = ({ showToast }) => {
                 className={`w-full px-4 py-2 rounded-lg border ${
                   theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
                 }`}
+                placeholder="Enter property name"
                 disabled={submitting}
               />
             </div>
@@ -99,6 +99,7 @@ const UpdatePropertyPage = ({ showToast }) => {
                 className={`w-full px-4 py-2 rounded-lg border ${
                   theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
                 }`}
+                placeholder="Enter property description"
                 disabled={submitting}
               />
             </div>
@@ -129,6 +130,7 @@ const UpdatePropertyPage = ({ showToast }) => {
                 className={`w-full px-4 py-2 rounded-lg border ${
                   theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
                 }`}
+                placeholder="Enter price"
                 disabled={submitting}
               />
             </div>
@@ -142,6 +144,7 @@ const UpdatePropertyPage = ({ showToast }) => {
                 className={`w-full px-4 py-2 rounded-lg border ${
                   theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
                 }`}
+                placeholder="Enter location"
                 disabled={submitting}
               />
             </div>
@@ -155,31 +158,8 @@ const UpdatePropertyPage = ({ showToast }) => {
                 className={`w-full px-4 py-2 rounded-lg border ${
                   theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
                 }`}
+                placeholder="Enter image URL"
                 disabled={submitting}
-              />
-            </div>
-            
-            <div>
-              <label className="block mb-2 font-semibold">User Email (Read-only)</label>
-              <input
-                type="email"
-                value={user?.email || ''}
-                readOnly
-                className={`w-full px-4 py-2 rounded-lg border bg-gray-200 ${
-                  theme === 'dark' ? 'border-gray-600 text-gray-900' : 'border-gray-300'
-                }`}
-              />
-            </div>
-            
-            <div>
-              <label className="block mb-2 font-semibold">User Name (Read-only)</label>
-              <input
-                type="text"
-                value={user?.displayName || ''}
-                readOnly
-                className={`w-full px-4 py-2 rounded-lg border bg-gray-200 ${
-                  theme === 'dark' ? 'border-gray-600 text-gray-900' : 'border-gray-300'
-                }`}
               />
             </div>
           </div>
@@ -188,14 +168,15 @@ const UpdatePropertyPage = ({ showToast }) => {
             <button
               type="submit"
               disabled={submitting}
-              className="flex-1 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold disabled:opacity-50"
+              className="flex-1 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold disabled:opacity-50"
             >
               {submitting ? 'Updating...' : 'Update Property'}
             </button>
             <button
               type="button"
-              onClick={() => navigate(-1)}
-              className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-semibold"
+              onClick={() => navigate('/my-properties')}
+              disabled={submitting}
+              className="flex-1 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-semibold disabled:opacity-50"
             >
               Cancel
             </button>
