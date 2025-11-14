@@ -24,32 +24,32 @@ const PropertyDetailsPage = ({ showToast }) => {
         propertyName: 'Modern Villa',
         description: 'Stunning modern villa with pool, garden, and amazing views. This property features 5 bedrooms, 4 bathrooms, a spacious living area, and modern amenities throughout.',
         category: 'Sale',
-        price: 2500000,
-        location: 'Beverly Hills, CA',
+        price: 250000000, // Updated to BDT (2.5 crore)
+        location: 'Bashundhara, Dhaka', // Updated to Bangladeshi location
         imageLink: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800',
         postedDate: '2025-11-15',
-        userName: 'John Doe',
-        userEmail: 'john@example.com',
-        userPhoto: 'https://i.pravatar.cc/100?img=1'
+        userName: 'Redwan Shahriar Shubho', // Updated name
+        userEmail: 'redwanshahriarshubho.1789@gmail.com', // Updated email
+        userPhoto: '' // Avatar based on name; replace with your hosted photo URL
       });
-      
+     
       setRatings([
-        { 
-          _id: '1', 
-          reviewerName: 'Alice Johnson', 
-          rating: 5, 
-          review: 'Amazing property! Highly recommended.', 
-          reviewDate: '2025-11-14' 
+        {
+          _id: '1',
+          reviewerName: 'AAA',
+          rating: 5,
+          review: 'Amazing property! Highly recommended.',
+          reviewDate: '2025-11-14'
         },
-        { 
-          _id: '2', 
-          reviewerName: 'Bob Smith', 
-          rating: 4, 
-          review: 'Great location and beautiful home.', 
-          reviewDate: '2025-11-13' 
+        {
+          _id: '2',
+          reviewerName: 'BBB',
+          rating: 4,
+          review: 'Great location and beautiful home.',
+          reviewDate: '2025-11-13'
         }
       ]);
-      
+     
       setLoading(false);
     }, 800);
   };
@@ -64,13 +64,13 @@ const PropertyDetailsPage = ({ showToast }) => {
       showToast('Please write a review', 'error');
       return;
     }
-    
+   
     setSubmitting(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
       showToast('Rating submitted successfully!', 'success');
       setNewRating({ rating: 5, review: '' });
-      loadPropertyDetails(); // Reload
+      loadPropertyDetails(); // Reload to show new rating
     } catch (error) {
       showToast('Failed to submit rating', 'error');
     } finally {
@@ -87,21 +87,21 @@ const PropertyDetailsPage = ({ showToast }) => {
       <div className="max-w-5xl mx-auto px-4 py-8">
         {/* Property Image */}
         <img src={property.imageLink} alt={property.propertyName} className="w-full h-96 object-cover rounded-lg shadow-lg mb-8" />
-        
+       
         {/* Property Info */}
         <div className="p-8 rounded-lg shadow-lg mb-8 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-start mb-4">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white">{property.propertyName}</h1>
             <span className="px-4 py-2 bg-blue-600 text-white rounded-full">{property.category}</span>
           </div>
-          
+         
           <div className="flex items-center text-green-600 font-bold text-3xl mb-6">
             <DollarSign className="w-8 h-8" />
-            <span>${property.price.toLocaleString()}</span>
+            <span>৳{property.price.toLocaleString()}</span> {/* Updated to Taka (৳) */}
           </div>
-          
+         
           <p className="text-lg mb-6 text-gray-600 dark:text-gray-400">{property.description}</p>
-          
+         
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div className="flex items-center text-gray-600 dark:text-gray-400">
               <MapPin className="w-5 h-5 mr-3 text-blue-600" />
@@ -114,96 +114,78 @@ const PropertyDetailsPage = ({ showToast }) => {
               <span className="ml-2">{new Date(property.postedDate).toLocaleDateString()}</span>
             </div>
           </div>
-          
-          {/* Posted By */}
-          <div className="flex items-center p-4 rounded-lg bg-gray-100 dark:bg-gray-700">
-            <img src={property.userPhoto} alt={property.userName} className="w-16 h-16 rounded-full mr-4" />
-            <div>
-              <p className="font-semibold text-gray-900 dark:text-white">Posted by</p>
-              <p className="text-lg text-gray-900 dark:text-white">{property.userName}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{property.userEmail}</p>
+
+          {/* Owner Info */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Posted by</h3>
+            <div className="flex items-center">
+              <img src={property.userPhoto} alt={property.userName} className="w-12 h-12 rounded-full mr-4" />
+              <div>
+                <p className="font-semibold text-gray-900 dark:text-white">{property.userName}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{property.userEmail}</p>
+              </div>
             </div>
           </div>
         </div>
-        
-        {/* Ratings & Reviews Section */}
-        <div className="p-8 rounded-lg shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-          <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Ratings & Reviews</h2>
+
+        {/* Reviews & Ratings */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Reviews & Ratings</h2>
           
-          {/* Submit Rating Form */}
           {user && (
-            <form onSubmit={handleSubmitRating} className="mb-8 p-6 rounded-lg bg-gray-100 dark:bg-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Leave a Review</h3>
-              
-              <div className="mb-4">
-                <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Rating (1-5 stars)</label>
-                <div className="flex items-center space-x-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type="button"
-                      onClick={() => setNewRating({...newRating, rating: star})}
-                      className="focus:outline-none"
-                      disabled={submitting}
-                    >
-                      <Star className={`w-8 h-8 ${star <= newRating.rating ? 'text-yellow-400 fill-current' : 'text-gray-400 dark:text-gray-500'}`} />
-                    </button>
+            <form onSubmit={handleSubmitRating} className="mb-6 p-4 border rounded-lg bg-white dark:bg-gray-800">
+              <div className="flex items-center mb-4">
+                <label className="mr-2 font-semibold text-gray-900 dark:text-white">Rating:</label>
+                <select 
+                  value={newRating.rating} 
+                  onChange={(e) => setNewRating({...newRating, rating: parseInt(e.target.value)})} 
+                  className="mr-4 p-1 border rounded"
+                >
+                  {[1,2,3,4,5].map(n => (
+                    <option key={n} value={n}>{'★'.repeat(n)}</option>
                   ))}
-                  <span className="ml-4 text-lg font-semibold text-gray-900 dark:text-white">{newRating.rating} stars</span>
-                </div>
+                </select>
               </div>
-              
-              <div className="mb-4">
-                <label className="block mb-2 font-semibold text-gray-900 dark:text-white">Your Review</label>
-                <textarea
-                  value={newRating.review}
-                  onChange={(e) => setNewRating({...newRating, review: e.target.value})}
-                  rows="4"
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                  placeholder="Share your experience with this property..."
-                  disabled={submitting}
-                />
-              </div>
-              
-              <button
-                type="submit"
-                disabled={submitting}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+              <textarea
+                value={newRating.review}
+                onChange={(e) => setNewRating({...newRating, review: e.target.value})}
+                placeholder="Write your review..."
+                className="w-full p-2 border rounded mb-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                rows={3}
+              />
+              <button 
+                type="submit" 
+                disabled={submitting} 
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
               >
                 {submitting ? 'Submitting...' : 'Submit Review'}
               </button>
             </form>
           )}
-          
-          {!user && (
-            <div className="mb-8 p-4 bg-yellow-100 dark:bg-yellow-900 border border-yellow-400 dark:border-yellow-600 rounded-lg">
-              <p className="text-yellow-800 dark:text-yellow-200">Please login to leave a review</p>
-            </div>
-          )}
-          
-          {/* Existing Ratings */}
+
           <div className="space-y-4">
             {ratings.map((rating) => (
-              <div key={rating._id} className="p-6 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <p className="font-semibold text-lg text-gray-900 dark:text-white">{rating.reviewerName}</p>
-                    <div className="flex items-center mt-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star key={star} className={`w-5 h-5 ${star <= rating.rating ? 'text-yellow-400 fill-current' : 'text-gray-400 dark:text-gray-500'}`} />
+              <div key={rating._id} className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center">
+                    <div className="flex mr-2">
+                      {Array.from({length: rating.rating}).map((_, i) => (
+                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                      ))}
+                      {Array.from({length: 5 - rating.rating}).map((_, i) => (
+                        <Star key={i} className="w-5 h-5 text-gray-300" />
                       ))}
                     </div>
                   </div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">{new Date(rating.reviewDate).toLocaleDateString()}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    {new Date(rating.reviewDate).toLocaleDateString()}
+                  </span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400">{rating.review}</p>
+                <p className="text-gray-800 dark:text-white">{rating.review}</p>
+                <p className="text-sm text-gray-500 mt-1">— {rating.reviewerName}</p>
               </div>
             ))}
           </div>
-          
-          {ratings.length === 0 && (
-            <p className="text-center text-gray-500 dark:text-gray-400 py-8">No reviews yet. Be the first to review!</p>
-          )}
         </div>
       </div>
     </div>
